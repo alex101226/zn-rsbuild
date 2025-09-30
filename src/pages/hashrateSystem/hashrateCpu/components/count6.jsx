@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import CustomTable from '@/components/customTable'
-import {Box} from "@mui/material";
-import { getUsageRate, transNumber } from '@/utils'
+import { getUsageRate } from '@/utils'
 import { hashRateFilter } from '@/filters'
 
 

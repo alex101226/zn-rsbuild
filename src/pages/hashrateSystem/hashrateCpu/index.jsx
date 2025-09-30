@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import {Box} from '@mui/material'
+import { useNavigate } from 'react-router';
+import {Box, Button, Tooltip, Typography} from '@mui/material'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import CustomTabs from '@/components/customTabs'
 import CustomCard from '@/components/customCard'
 import Count5 from './components/count5'
@@ -9,6 +11,7 @@ import {getTasks, taskStats} from '@/services'
 
 
 const HashrateCpu = () => {
+  const navigate = useNavigate();
   //  切换tab
   const [activeTab, setActiveTab] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -29,7 +32,7 @@ const HashrateCpu = () => {
   const fetchTasks = () => {
     const params = {
       page: 1,
-      pageSize: 1000
+      pageSize: 5
     }
     getTasks(params).then((res) => {
       if (res.code === 0) {
@@ -65,9 +68,31 @@ const HashrateCpu = () => {
     setActiveIndex(index)
   }
 
-  const currentChildren = () => {
-    const find = tabs.find((tab) => tab.id === activeTab)
-    return find ? find.children : []
+  // const currentChildren = () => {
+  //   const find = tabs.find((tab) => tab.id === activeTab)
+  //   return find ? find.children : []
+  // }
+
+  const cardAction = () => {
+    return (
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'baseline',
+          flex: 1,
+          p: 0.5,
+        }}>
+          <Typography component="p" variant="p" fontWeight="700">
+            最新任务
+          </Typography>
+          <Tooltip title="更多">
+            <Button
+                endIcon={<MoreHorizIcon size="large" />}
+                onClick={() => navigate('/hashrate-task-resource')}>
+            </Button>
+          </Tooltip>
+        </Box>
+    )
   }
 
   return (
@@ -83,9 +108,20 @@ const HashrateCpu = () => {
           <Count5 activeIndex={activeIndex} data={counts} />
         </CustomCard>
 
-        <Box sx={{ mt: 4 }}>
+        <CustomCard
+            cardType="outlined"
+            actionChildren={cardAction()}
+            cardActionStyle={{
+              backgroundColor: 'var(--custom-card-action-background)',
+              color: 'var(--custom-menu-color)'
+            }}>
+
           <Count6 list={taskList} data={counts} />
-        </Box>
+        </CustomCard>
+
+        {/*<Box sx={{ mt: 4 }}>*/}
+        {/*  <Count6 list={taskList} data={counts} />*/}
+        {/*</Box>*/}
       </Box>
   );
 }
