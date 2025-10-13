@@ -12,7 +12,6 @@ import CustomDrawer from '@/components/customDrawer'
 import {coverDateObj, coverDateString, message} from '@/utils'
 import { addVehicle, updateVehicle, getHashrateUser, getDrivers, getLocations } from '@/services'
 
-
 const initialState = {
   vehicle_alias: '',
   vehicle_photo: '',
@@ -30,7 +29,11 @@ const initialState = {
   manufacture_year: coverDateObj(null, '5'),
   purchase_date: coverDateObj(null, '1'),
   insurance_expiry: coverDateObj(null, '1'),
-  driver_ids: []
+  driver_ids: [],
+  vehicle_weight: '',
+  load_capacity: '',
+  emission_standard: '',
+  safety_equipment: '灭火器'
 }
 
 const InputHelp = styled(FormHelperText)({
@@ -51,7 +54,8 @@ const SaveCarDrawer = (props) => {
     setValue,
     watch,
   } = useForm({
-    defaultValues: initialState
+    defaultValues: initialState,
+    mode: 'onChange',
   });
 
   useEffect(() => {
@@ -60,6 +64,7 @@ const SaveCarDrawer = (props) => {
       fetchUser()
       fetchLocation()
       if (data) {
+        console.log('data',data)
         reset({
           ...data,
           manufacture_year: coverDateObj(data.manufacture_year.toString(), '5'),
@@ -156,7 +161,6 @@ const SaveCarDrawer = (props) => {
   }
 
   const onSubmit = (data) => {
-
     const params = {
       ...data,
       manufacture_year: coverDateString(data.manufacture_year, '5'),
@@ -172,6 +176,17 @@ const SaveCarDrawer = (props) => {
   }
 
   const vehiclePhoto = watch('vehicle_photo'); // 监听 vehicle_photo
+  const fuelType = watch('fuel_type')
+
+  useEffect(() => {
+    if (type === 'add') {
+      const value = fuelType === '' ? '' : fuelType === '电动' ? '1': '2'
+      setValue('emission_standard', value, {
+        shouldValidate: false,
+        shouldDirty: true,
+      })
+    }
+  }, [fuelType])
 
   const renderForm = () => {
     return (
@@ -271,10 +286,14 @@ const SaveCarDrawer = (props) => {
             </InputHelp>
           </FormControl>
           <FormControl fullWidth error={!!errors.mileage} margin="normal">
-            <InputLabel htmlFor="mileage">里程数（公里）</InputLabel>
+            <InputLabel htmlFor="mileage">里程数（KM）</InputLabel>
             <OutlinedInput
                 {...register("mileage", {
                   required: '请输入里程数（KM）',
+                  pattern: {
+                    value: /^[0-9]*\.?[0-9]*$/,
+                    message: "请输入有效的数字",
+                  },
                 })}
                 label="里程数（KM）"
                 id="mileage"
@@ -282,6 +301,42 @@ const SaveCarDrawer = (props) => {
             />
             <InputHelp id="mileage-helper-text">
               {errors.mileage?.message}
+            </InputHelp>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel htmlFor="vehicle_weight">整车质量（KG）</InputLabel>
+            <OutlinedInput
+                {...register("vehicle_weight", {
+                  pattern: {
+                    value: /^[0-9]*\.?[0-9]*$/,
+                    message: "请输入有效的数字",
+                  },
+                  setValueAs: (v) => v === '' ? null : parseFloat(v),
+                })}
+                label="整车质量（KG）"
+                id="vehicle_weight"
+                aria-describedby="vehicle_weight-helper-text"
+            />
+            <InputHelp error>
+              {errors.vehicle_weight?.message}
+            </InputHelp>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel htmlFor="load_capacity">载货质量（KG）</InputLabel>
+            <OutlinedInput
+                {...register("load_capacity", {
+                  pattern: {
+                    value: /^[0-9]*\.?[0-9]*$/,
+                    message: "请输入有效的数字",
+                  },
+                  setValueAs: (v) => v === '' ? null : parseFloat(v),
+                })}
+                label="载货质量（KG）"
+                id="load_capacity"
+                aria-describedby="load_capacity-helper-text"
+            />
+            <InputHelp error>
+              {errors.load_capacity?.message}
             </InputHelp>
           </FormControl>
           <Controller
@@ -310,6 +365,35 @@ const SaveCarDrawer = (props) => {
                   </FormControl>
               )}
           />
+          <Controller
+              name="emission_standard"
+              control={control}
+              rules={{ required: '请选择排放标准' }}
+              render={({ field, fieldState }) => (
+                  <FormControl fullWidth error={!!fieldState.error} margin="normal">
+                    <InputLabel id="emission_standard-label">排放标准</InputLabel>
+                    <Select
+                        labelId="emission_standard-label"
+                        id="emission_standard"
+                        label="燃油类型"
+                        value={field.value}
+                        onChange={(e) => field.onChange(e)}>
+                      {
+                        fuelType === '电动' ?
+                            <MenuItem value={1}>
+                              零排放
+                            </MenuItem>
+                            :   <MenuItem value={2}>
+                              国六
+                            </MenuItem>
+                      }
+                    </Select>
+                    <InputHelp id="emission_standard-helper-text">
+                      {fieldState.error?.message}
+                    </InputHelp>
+                  </FormControl>
+              )}
+          />
           <FormControl fullWidth error={!!errors.engine_number} margin="normal">
             <InputLabel htmlFor="engine_number">发动机号</InputLabel>
             <OutlinedInput
@@ -323,6 +407,17 @@ const SaveCarDrawer = (props) => {
             <InputHelp id="engine_number-helper-text">
               {errors.engine_number?.message}
             </InputHelp>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel htmlFor="safety_equipment">安全设备配置</InputLabel>
+            <OutlinedInput
+                {...register("safety_equipment", {
+                  setValueAs: (v) => v === '' ? null : v,
+                })}
+                label="安全设备配置"
+                id="safety_equipment"
+                aria-describedby="safety_equipment-helper-text"
+            />
           </FormControl>
           <FormControl fullWidth margin="normal">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -440,16 +535,18 @@ const SaveCarDrawer = (props) => {
           <Controller
               name="owner_id"
               control={control}
-              rules={{ required: '请选择负责人' }}
               render={({ field, fieldState }) => (
-                  <FormControl fullWidth error={!!fieldState.error} margin="normal">
+                  <FormControl fullWidth margin="normal">
                     <InputLabel htmlFor="owner_id-label">负责人</InputLabel>
                     <Select
                         labelId="owner_id-label"
                         id="owner_id"
-                        aria-describedby="owner_id-helper-text"
                         label="负责人"
-                        { ...field }>
+                        value={field.value ?? ''}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          field.onChange(value === '' ? null : value)
+                        }}>
                       {
                         userData.map((item, index) => (
                             <MenuItem key={index} value={item.id}>
@@ -458,9 +555,9 @@ const SaveCarDrawer = (props) => {
                         ))
                       }
                     </Select>
-                    <InputHelp id="owner_id-helper-text">
-                      {fieldState.error?.message}
-                    </InputHelp>
+                    {/*<InputHelp id="owner_id-helper-text">*/}
+                    {/*  {fieldState.error?.message}*/}
+                    {/*</InputHelp>*/}
                   </FormControl>
               )}
           />
@@ -518,7 +615,7 @@ const SaveCarDrawer = (props) => {
       <CustomDrawer
           open={open}
           onClose={handleClose}
-          title={isAdd() ? '添加车辆' : '修改车辆'}
+          title={isAdd() ? '车辆注册' : '修改车辆'}
           children={renderForm()}
           actions={<AppBar
               elevation={0}

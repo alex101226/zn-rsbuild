@@ -80,6 +80,7 @@ const Login = () => {
       <FormControl fullWidth error={!!errors.password} margin="normal">
         <FormInputLabel htmlFor="password-input">密码</FormInputLabel>
         <FormInput
+            type="password"
             id="password-input"
             aria-describedby="password-helper-text"
             label="密码"

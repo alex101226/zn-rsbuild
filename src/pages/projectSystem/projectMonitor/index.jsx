@@ -1,45 +1,34 @@
 import {useState} from 'react';
-import {Box, ImageList, ImageListItem} from '@mui/material';
+import {Box, Grid, ImageList, ImageListItem} from '@mui/material';
 import Player from './components/player'
 import { srcset } from '@/utils'
+import CustomVideo from '@/components/customVideo'
+import video1 from '@/assets/videos/1.mp4'
+import video2 from '@/assets/videos/2.mp4'
+import video3 from '@/assets/videos/3.mp4'
+import video4 from '@/assets/videos/4.mp4'
 
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
+    img: video1,
     rows: 1,
     cols: 1,
   },
   {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
+    img: video2,
     rows: 1,
     cols: 1,
   },
   {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
+    img: video3,
     rows: 1,
     cols: 1,
   },
   {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
+    img: video4,
     rows: 1,
     cols: 1,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-    rows: 1,
-    cols: 1,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-    rows: 1,
-    cols: 1,
-  },
+  }
 ]
 
 const ProjectMonitor = () => {
@@ -55,22 +44,13 @@ const ProjectMonitor = () => {
   }
   return (
       <Box>
-        <ImageList cols={3} sx={{ mt: 0, mb: 0 }}>
-          {itemData.map((item) => (
-              <ImageListItem
-                  key={item.img}
-                  cols={item.cols || 1} rows={item.rows || 1}
-                  sx={{ cursor: 'pointer' }}
-                  onClick={openVideo(item)}
-              >
-                <img
-                    {...srcset(item.img, 100, item.rows, item.cols)}
-                    alt={item.title}
-                    loading="lazy"
-                />
-              </ImageListItem>
+        <Grid sx={{ mt: 0, mb: 0 }} container spacing={2}>
+          {itemData.map((item, index) => (
+              <Grid size={6} key={index} onClick={openVideo(item)}>
+                <CustomVideo src={item.img} />
+              </Grid>
           ))}
-        </ImageList>
+        </Grid>
 
         <Player open={open} data={data} onClose={onClose} />
       </Box>

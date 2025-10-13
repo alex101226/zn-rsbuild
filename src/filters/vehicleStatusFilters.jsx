@@ -9,7 +9,7 @@ import { renderRadiusContained } from '@/filters'
 /**
  * 车辆状态
  * @value status
- * @returns {string}
+ * @returns {{CAR_STATUS_OPTIONS: string[], renderCarStatus: ((function(*): (string|*))|*)}}
  * 1: 使用中，2: 故障，3: 维修中, 4: 闲置
  */
 export const carStatusFilter = () => {
@@ -22,7 +22,7 @@ export const carStatusFilter = () => {
       case '2':
         return '故障';
       case '3':
-        return '维修中';
+        return '检修';
       case '4':
         return '闲置';
       default:

@@ -6,7 +6,7 @@ import { coverDateString, randomFactoryLocation, randomDate, randomFireUpsStatus
  * 单个的消防设备数据
  * @returns {*|{Handler: *, Random: *, Util: *, XHR: *, RE: *, toJSONSchema: *, valid: *, heredoc: *, setup: function(*): *, _mocked: {}}}
  */
-export const genFireDevice = (user) => {
+export const genFireDevice = () => {
   const createTime = randomDate(dateRange[0], dateRange[1])
 
   // 2. 安装时间 = createTime 之前 0~30 天
@@ -31,7 +31,7 @@ export const genFireDevice = (user) => {
 
   return Mock.mock({
     status: randomFireUpsStatus(),  // 当前状态：正常/故障/报警/维护
-    manager: user.nickname,  // 责任人
+    // manager: user.nickname,  // 责任人
     id: '@natural(100000, 999999)',  // 设备唯一ID
     name: '@pick(["灭火器", "消防栓", "烟感探测器", "喷淋头", "手动报警按钮"])',   // 设备名称（通俗叫法）
     type: '@pick(["extinguisher", "hydrant", "smoke_detector", "sprinkler", "alarm_button"])',  // 设备类型（英文标识，方便程序使用）
@@ -56,20 +56,20 @@ export const genFireDevice = (user) => {
 
 /**
  * 生成消防设备列表
- * @param users
  * @param count
  * @returns {(*|{Handler: *, Random: *, Util: *, XHR: *, RE: *, toJSONSchema: *, valid: *, heredoc: *, setup: (function(*): *), _mocked: {}})[]}
  */
-export const genFireDeviceList = (users, count = 10) => {
-  // return Array.from({ length: count }, () => genFireDevice(dateRange));
-  const arr = []
-  const perUps = Math.floor(count / users.length);
-  users.forEach((item) => {
-    for (let i = 0; i < perUps; i++) {
-      arr.push(genFireDevice(item));
-    }
-  })
-  return arr;
+export const genFireDeviceList = (count = 10) => {
+  return Array.from({ length: count }, (_, i) => genFireDevice());
+
+  // const arr = []
+  // const perUps = Math.floor(count / users.length);
+  // users.forEach((item) => {
+  //   for (let i = 0; i < perUps; i++) {
+  //     arr.push(genFireDevice(item));
+  //   }
+  // })
+  // return arr;
 };
 
 
@@ -77,7 +77,7 @@ export const genFireDeviceList = (users, count = 10) => {
  * 单个的ups电源数据
  * @returns {{id, name: string, manufacturer: *, type: *, serialNumber: string, power_capacity: string, battery_capacity: string, voltage_input: string, voltage_output: string, status: *, manufactureDate: ((function(*): string)|*), installDate: ((function(*): string)|*), lastCheckDate: ((function(*): string)|*), runtime_remaining: *, location: string, temperature: *, load_percent: *, createTime: ((function(*): string)|*), updateTime: ((function(*): string)|*), manager: *, department: *}}
  */
-export const genUPS = (user, id) => {
+export const genUPS = (id) => {
   const createTime = randomDate(dateRange[0], dateRange[1])
 
   // 2. 安装时间 = createTime 之前 0~30 天
@@ -114,25 +114,24 @@ export const genUPS = (user, id) => {
     load_percent: Mock.Random.integer(10, 95),   //  当前负载百分比
     createTime: coverDateString(createTime, '4'), //  数据创建时间
     updateTime: coverDateString(updateTime, '4'), //  数据修改时间
-    manager: user.nickname,
+    // manager: user.nickname,
     department: Mock.Random.pick(['IT运维部', '网络安全部', '数据中心部', '财务部', '行政部']),
   };
 };
 
 /**
  * 批量生成ups电源数据
- * @param users
  * @param count
  * @returns {{id, name: string, manufacturer: *, type: *, serialNumber: string, power_capacity: string, battery_capacity: string, voltage_input: string, voltage_output: string, status: *, manufactureDate: ((function(*): string)|*), installDate: ((function(*): string)|*), lastCheckDate: ((function(*): string)|*), runtime_remaining: *, location: string, temperature: *, load_percent: *, createTime: ((function(*): string)|*), updateTime: ((function(*): string)|*), manager: *, department: *}[]}
  */
-export const genUPSList = (users, count = 10) => {
-  // return Array.from({ length: count }, (_, i) => genUPS(i + 1, dateRange));
-  const arr = []
-  const perUps = Math.floor(count / users.length);
-  users.forEach((item) => {
-    for (let i = 0; i < perUps; i++) {
-      arr.push(genUPS(item, i));
-    }
-  })
-  return arr;
+export const genUPSList = (count = 10) => {
+  return Array.from({ length: count }, (_, i) => genUPS(i + 1, dateRange));
+  // const arr = []
+  // const perUps = Math.floor(count / users.length);
+  // users.forEach((item) => {
+  //   for (let i = 0; i < perUps; i++) {
+  //     arr.push(genUPS(item, i));
+  //   }
+  // })
+  // return arr;
 };

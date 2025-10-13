@@ -28,7 +28,7 @@ const ProjectFireDevice = () => {
       valueOptions: FIRE_STATUS_OPTIONS,
       renderCell: (params) => renderFireStatus(params.value),
     },
-    { headerName: '负责人', field: 'manager', minWidth: 150, flex: 1, renderCell: renderCellExpand },
+    // { headerName: '负责人', field: 'manager', minWidth: 150, flex: 1, renderCell: renderCellExpand },
     // {
     //   headerName: '操作',
     //   field: 'action',
@@ -57,10 +57,10 @@ const ProjectFireDevice = () => {
   }
 
   useEffect(() => {
-    // const data = genFireDeviceList()
+    const data = genFireDeviceList(30)
     // console.log('data', data)
-    // setTableData(data)
-    fetchUser()
+    setTableData(data)
+    // fetchUser()
   }, [])
   const [record, setRecord] = useState({});
   const [open, setOpen] = useState(false);

@@ -18,6 +18,7 @@ const App = () => {
   //  获取用户信息
   const { userInfo, fetchUserInfo } = useUserStore()
   useEffect(() => {
+    console.log('routes', routes)
     if (userInfo.token) {
       fetchUserInfo()
     }

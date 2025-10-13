@@ -87,7 +87,7 @@ const HashrateCpu = () => {
           </Typography>
           <Tooltip title="更多">
             <Button
-                endIcon={<MoreHorizIcon size="large" />}
+                endIcon={<MoreHorizIcon size="large" sx={{ color: 'var(--custom-menu-color)' }} />}
                 onClick={() => navigate('/hashrate-task-resource')}>
             </Button>
           </Tooltip>

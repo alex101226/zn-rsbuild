@@ -1,12 +1,12 @@
 import {useState, useEffect} from 'react';
-import {Box, Button} from '@mui/material'
+import {Box, Button, Stack} from '@mui/material'
 import {carStatusFilter} from '@/filters';
 import CustomTable from "@/components/customTable";
 import CustomPagination from '@/components/customPagination';
 import CustomImage from '@/components/customImage'
 import { renderCellExpand } from '@/components/CustomCellExpand'
 import SaveCarDrawer from './components/saveCarDrawer'
-import DetailsDrawer from './components/deletesDrawer'
+import DetailsDrawer from './components/detailDrawer.jsx'
 import { getVehicle } from '@/services'
 import { useUserStore } from '@/store'
 
@@ -47,7 +47,7 @@ const CarRegister = () => {
       // { headerName: '车辆品牌', field: 'brand', renderCell: renderCellExpand, flex: 1, minWidth: 150, },
       // { headerName: '系列号', field: 'series_number', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
       // { headerName: 'VIN码', field: 'vin_code', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
-      { headerName: '里程数/KG', field: 'mileage', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
+      { headerName: '里程数/KM', field: 'mileage', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
       { headerName: '燃油类型', field: 'fuel_type', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
       // { headerName: '发动机号', field: 'engine_number', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
       // {
@@ -62,7 +62,7 @@ const CarRegister = () => {
         headerName: '车辆状态',
         field: 'status',
         flex: 1, minWidth: 150,
-        renderCell: (params) => renderCarStatus(params.value.toString()),
+        renderCell: (params) => renderCarStatus(params.value),
         valueOptions: CAR_STATUS_OPTIONS,
       },
       { headerName: '备注信息', field: 'remark', flex: 1, minWidth: 150, renderCell: renderCellExpand, },
@@ -80,6 +80,9 @@ const CarRegister = () => {
           return <Box>
             <Button onClick={onEdit('edit', params.row)}>
               修改
+            </Button>
+            <Button onClick={onEdit('dispatch', params.row)}>
+              调度
             </Button>
             <Button onClick={() => handleOpenDetails(params.row)}>
               查看详情
@@ -156,11 +159,18 @@ const CarRegister = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      { isRoot() && <Button variant="contained" sx={{mb: 2}} onClick={onEdit('add', null)}>
-        添加车辆
-      </Button>}
+      { isRoot() ?
+          <Stack direction="row" spacing={2}>
+            <Button variant="contained" onClick={onEdit('add', null)}>
+              车辆注册
+            </Button>
+            <Button variant="contained" onClick={onEdit('allDispatch', null)}>
+              一键调度
+            </Button>
+          </Stack>
+      : null}
 
-      <Box sx={{ height: 'calc(100vh) - 250px' }}>
+      <Box sx={{ height: 'calc(100vh) - 250px', mt: 2 }}>
         <CustomTable
             tableData={data}
             column={getColumn()}

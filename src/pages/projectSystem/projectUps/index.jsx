@@ -35,7 +35,7 @@ const ProjectUps = () => {
       valueOptions: FIRE_STATUS_OPTIONS,
       renderCell: (params) => renderFireStatus(params.value),
     },
-    { headerName: '负责人', field: 'manager', flex: 1, minWidth: 150, renderCell: renderCellExpand },
+    // { headerName: '负责人', field: 'manager', flex: 1, minWidth: 150, renderCell: renderCellExpand },
     // {
     //   headerName: '操作',
     //   field: 'action',
@@ -65,9 +65,9 @@ const ProjectUps = () => {
   }
 
   useEffect(() => {
-    // const data = genUPSList()
-    // setTableData(data)
-    fetchUser()
+    const data = genUPSList(30)
+    setTableData(data)
+    // fetchUser()
   }, [])
 
   const [record, setRecord] = useState({});

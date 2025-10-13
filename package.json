@@ -7,7 +7,8 @@
     "serve": "NODE_OPTIONS='--experimental-vm-modules' rsbuild dev",
     "build": "rsbuild build",
     "dev": "rsbuild dev --open --port 3010",
-    "preview": "rsbuild preview"
+    "preview": "rsbuild preview",
+    "build:file": "rsbuild build && mv dist zn"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
