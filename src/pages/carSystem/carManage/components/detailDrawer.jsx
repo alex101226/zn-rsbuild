@@ -10,6 +10,13 @@ const DetailsDrawer = (props) => {
 
   const handleClose= () => onDetailsClose()
 
+  const renderEmissionStandard = (value) => {
+    if (!value) {
+      return ''
+    }
+    return value === '1' ? '零排放' : '国六'
+  }
+
   const renderContent = () => {
     return data
         ? <Fragment>
@@ -85,6 +92,44 @@ const DetailsDrawer = (props) => {
               </Typography>
             </Box>
           </Stack>
+
+          <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>
+              <Typography variant="p" component="p" sx={{ color: 'var(--custom-palette-color-1)' }}>
+                排放标准：
+              </Typography>
+              <Typography>
+                {renderEmissionStandard(data.emission_standard)}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>
+              <Typography variant="p" component="p" sx={{ color: 'var(--custom-palette-color-1)' }}>
+                安全设备配置：
+              </Typography>
+              <Typography>
+                { data.safety_equipment }
+              </Typography>
+            </Box>
+          </Stack>
+          <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>
+              <Typography variant="p" component="p" sx={{ color: 'var(--custom-palette-color-1)' }}>
+                整车质量/KG：
+              </Typography>
+              <Typography>
+                {data.vehicle_weight}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>
+              <Typography variant="p" component="p" sx={{ color: 'var(--custom-palette-color-1)' }}>
+                载货质量/KG：
+              </Typography>
+              <Typography>
+                { data.load_capacity }
+              </Typography>
+            </Box>
+          </Stack>
+
           <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>
               <Typography variant="p" component="p" sx={{ color: 'var(--custom-palette-color-1)' }}>
@@ -137,7 +182,6 @@ const DetailsDrawer = (props) => {
               </Typography>
             </Box>
           </Stack>
-
           <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>
               <Typography variant="p" component="p" sx={{ color: 'var(--custom-palette-color-1)' }}>

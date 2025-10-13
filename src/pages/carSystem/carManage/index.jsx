@@ -44,18 +44,8 @@ const CarRegister = () => {
         }
       },
       { headerName: '车辆名称', field: 'vehicle_alias', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
-      // { headerName: '车辆品牌', field: 'brand', renderCell: renderCellExpand, flex: 1, minWidth: 150, },
-      // { headerName: '系列号', field: 'series_number', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
-      // { headerName: 'VIN码', field: 'vin_code', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
       { headerName: '里程数/KM', field: 'mileage', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
       { headerName: '燃油类型', field: 'fuel_type', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
-      // { headerName: '发动机号', field: 'engine_number', renderCell: renderCellExpand, flex: 1, minWidth: 150,},
-      // {
-      //   headerName: '车辆位置',
-      //   field: 'location',
-      //   renderCell: renderCellExpand,
-      //   flex: 1, minWidth: 150,
-      // },
       { headerName: '所属部门', field: 'department', renderCell: renderCellExpand, flex: 1, minWidth: 150, },
       { headerName: '负责人', field: 'operator_nickname', renderCell: renderCellExpand, flex: 1, minWidth: 150, },
       {
@@ -75,7 +65,7 @@ const CarRegister = () => {
       {
         headerName: '操作',
         field: 'action',
-        flex: 1, minWidth: 180,
+        flex: 1, minWidth: 250,
         renderCell: (params) => {
           return <Box>
             <Button onClick={onEdit('edit', params.row)}>
