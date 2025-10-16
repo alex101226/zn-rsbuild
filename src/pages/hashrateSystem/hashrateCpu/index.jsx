@@ -68,11 +68,6 @@ const HashrateCpu = () => {
     setActiveIndex(index)
   }
 
-  // const currentChildren = () => {
-  //   const find = tabs.find((tab) => tab.id === activeTab)
-  //   return find ? find.children : []
-  // }
-
   const cardAction = () => {
     return (
         <Box sx={{

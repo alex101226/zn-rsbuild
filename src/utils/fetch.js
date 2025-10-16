@@ -34,10 +34,6 @@ async function request(url, options = {}) {
     if (data.code === 401) {
       message.error('登录已过期，请重新登录');
       useUserStore.getState().clearUserInfo();
-      // setTimeout(() => {
-      //   history.replaceState(null, '', '/login');
-      //   history.go(0);
-      // }, 2000)
     }
     return data;
   } catch (error) {

@@ -188,7 +188,7 @@ const DetailsDrawer = (props) => {
                 车辆位置：
               </Typography>
               <Typography>
-                {data.location}
+                {data.current_location_name}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '50%' }}>

@@ -77,8 +77,8 @@ export const getVehicleControl = async ({page, pageSize, status}) => {
 }
 
 //  调度历史记录
-export const getVehicleControlHistory = async ({page, pageSize, vehicle_id}) => {
-  return await http.get(`/getVehicleControlHistory?page=${page}&pageSize=${pageSize}&vehicle_id=${vehicle_id}`)
+export const getVehicleControlHistory = async ({page, pageSize, status}) => {
+  return await http.get(`/getVehicleControlHistory?page=${page}&pageSize=${pageSize}&status=${status}`)
 }
 //  车辆调度
 export const postDispatchVehicle = async (params) => {

@@ -25,7 +25,7 @@ const initialState = {
   department: '',
   status: '4',
   remark: '',
-  owner_id: '',
+  owner_id: null,
   manufacture_year: coverDateObj(null, '5'),
   purchase_date: coverDateObj(null, '1'),
   insurance_expiry: coverDateObj(null, '1'),
@@ -64,7 +64,6 @@ const SaveCarDrawer = (props) => {
       fetchUser()
       fetchLocation()
       if (data) {
-        console.log('data',data)
         reset({
           ...data,
           manufacture_year: coverDateObj(data.manufacture_year.toString(), '5'),
@@ -127,11 +126,11 @@ const SaveCarDrawer = (props) => {
     addVehicle(data).then(res => {
       if (res.code === 0) {
         message.success('添加成功')
+        handleClose(true)
       } else {
         message.error(res.message)
       }
       setLoading(false)
-      handleClose(true)
     }).catch(() => {
       message.error('添加失败')
       setLoading(false)
@@ -149,11 +148,11 @@ const SaveCarDrawer = (props) => {
     updateVehicle(params).then(res => {
       if (res.code === 0) {
         message.success('修改成功')
+        handleClose(true)
       } else {
         message.error(res.message)
       }
       setLoading(false)
-      handleClose(true)
     }).catch(() => {
       message.error('修改失败')
       setLoading(false)

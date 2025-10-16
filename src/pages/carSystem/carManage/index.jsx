@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import {Box, Button, Stack} from '@mui/material'
 import {carStatusFilter} from '@/filters';
 import CustomTable from "@/components/customTable";
@@ -7,10 +7,15 @@ import CustomImage from '@/components/customImage'
 import { renderCellExpand } from '@/components/CustomCellExpand'
 import SaveCarDrawer from './components/saveCarDrawer'
 import DetailsDrawer from './components/detailDrawer.jsx'
-import { getVehicle } from '@/services'
+import ControlErrorDialog from "@/pages/carSystem/carControl/components/controlErrorDialog";
+import {getVehicle, postDispatchAllVehicles, postDispatchVehicle} from '@/services'
 import { useUserStore } from '@/store'
+import {message} from "@/utils/index.js";
 
-
+const initialStateSelectionModel = {
+  type: 'include',
+  ids: new Set(),
+}
 const CarRegister = () => {
   const { userInfo } = useUserStore()
 
@@ -65,13 +70,17 @@ const CarRegister = () => {
       {
         headerName: '操作',
         field: 'action',
-        flex: 1, minWidth: 250,
+        flex: 1,
+        minWidth: 250,
         renderCell: (params) => {
           return <Box>
             <Button onClick={onEdit('edit', params.row)}>
               修改
             </Button>
-            <Button onClick={onEdit('dispatch', params.row)}>
+            <Button
+                disabled={['2', '3'].includes(params.row.status)}
+                onClick={onEdit('dispatch', params.row)}
+                loading={loading2}>
               调度
             </Button>
             <Button onClick={() => handleOpenDetails(params.row)}>
@@ -84,7 +93,7 @@ const CarRegister = () => {
   }
 
   //  获取车辆信息
-  const [data, setData] = useState([])
+  const [tableData, setTableData] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
@@ -97,7 +106,7 @@ const CarRegister = () => {
       if (res.code === 0) {
         setTotal(res.data.total)
         setTotalPages(res.data.totalPages)
-        setData(res.data.data)
+        setTableData(res.data.data)
       }
     })
   }
@@ -116,10 +125,18 @@ const CarRegister = () => {
   const [saveOpen, setSaveOpen] = useState(false);
   const [record, setRecord] = useState(null);
   const [type, setType] = useState('add');
+  //  显示调度信息dialog显示
+  const [errorOpen, setErrorOpen] = useState(false)
+  const [errorText, setErrorText] = useState('')
+
   const onEdit = (type, row) => () => {
-    setRecord(row ? row : null)
-    setType(type)
-    setSaveOpen(true)
+    if (type === 'dispatch') {
+      onDispatch(row.id)
+    } else {
+      setRecord(row ? row : null)
+      setType(type)
+      setSaveOpen(true)
+    }
   };
 
   //  关闭活动窗口
@@ -131,6 +148,11 @@ const CarRegister = () => {
           if (flag) {
             fetchVehicle(page)
           }
+        break;
+      case 'info':
+        setErrorText('')
+        setErrorOpen(false)
+        setSelectionModel(initialStateSelectionModel)
         break;
     }
   }
@@ -147,6 +169,63 @@ const CarRegister = () => {
     setOpenDetails(false)
   }
 
+  //  调度
+  const [selectionModel, setSelectionModel] = useState(initialStateSelectionModel);
+  const changeSelectionModal = (rows) => {
+    setSelectionModel(rows)
+  }
+  const selectedVehicleIds = useMemo(() => {
+    const { type, ids } = selectionModel;
+    if (type === 'include') {
+      return tableData.filter((item) => ids.has(item.id)).map((item) => item.id)
+    } else if (type === 'exclude') {
+      return tableData.filter((item) => !ids.has(item.id)).map((item) => item.id);
+    }
+    return [];
+  }, [selectionModel])
+
+  //  一键调度
+  const [loading1, setLoading1] = useState(false)
+  const handleAllDispatch = () => {
+    const params = {
+      vehicle_ids: selectedVehicleIds
+    }
+    if (loading1) return false;
+    setLoading1(true)
+    postDispatchAllVehicles(params).then((res) => {
+      if (res.code === 0) {
+        fetchVehicle(page)
+      }
+      setErrorText(res.message)
+      setErrorOpen(true)
+      setLoading1(false)
+    }).catch((err) => {
+      message.error('操作失败')
+      setLoading1(false)
+    })
+  }
+
+  //  单个车辆调度
+  const [loading2, setLoading2] = useState(false)
+  const onDispatch = (id) => {
+    if (loading2) return false;
+    setLoading2(true)
+    postDispatchVehicle({ vehicle_id: id }).then((res) => {
+      if (res.code === 0) {
+        message.success('操作成功')
+        setSelectionModel(initialStateSelectionModel)
+        // fetchVehicleControl(page)
+        fetchVehicle(page)
+      } else {
+        message.error(res.message)
+      }
+      setLoading2(false)
+    }).catch((err) => {
+      message.error('操作失败')
+      setLoading2(false)
+    })
+  }
+
   return (
     <Box sx={{ width: '100%' }}>
       { isRoot() ?
@@ -154,7 +233,11 @@ const CarRegister = () => {
             <Button variant="contained" onClick={onEdit('add', null)}>
               车辆注册
             </Button>
-            <Button variant="contained" onClick={onEdit('allDispatch', null)}>
+            <Button
+                variant="contained"
+                onClick={handleAllDispatch}
+                loading={loading1}
+                disabled={selectedVehicleIds.length === 0}>
               一键调度
             </Button>
           </Stack>
@@ -162,11 +245,15 @@ const CarRegister = () => {
 
       <Box sx={{ height: 'calc(100vh) - 250px', mt: 2 }}>
         <CustomTable
-            tableData={data}
+            tableData={tableData}
             column={getColumn()}
             rowKeyProp="id"
             hideFooter
             rowHeight={80}
+            checkboxSelection
+            isRowSelectable={(params) => ['1', '4'].includes(params.row.status)}
+            rowSelectionModel={selectionModel}
+            onRowSelectionModelChange={(rowSelectionModel) => changeSelectionModal(rowSelectionModel)}
         />
       </Box>
       <CustomPagination
@@ -182,8 +269,13 @@ const CarRegister = () => {
           type={type}
           onClose={ (flag) => onClose('save', flag) }
       />
-
       <DetailsDrawer open={openDetails} onDetailsClose={onDetailsClose} data={record} />
+
+      <ControlErrorDialog
+          open={errorOpen}
+          data={errorText}
+          onClose={() => onClose('info', false)}
+      />
     </Box>
   )
 }
