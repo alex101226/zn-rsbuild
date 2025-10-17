@@ -8,7 +8,7 @@
     "build": "rsbuild build",
     "dev": "rsbuild dev --open --port 3010",
     "preview": "rsbuild preview",
-    "build:file": "rsbuild build && mv dist zn"
+    "build:file": "rsbuild build && mv dist zn-web"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -27,13 +27,17 @@ export default defineConfig({
     },
   },
   html: {
-    title: ''
-    // title: '越泰高精度定位及算力管理系统',
-    // favicon: './src/assets/images/logo-1.svg', // 或者 public/favicon.ico
+    title: '越泰高精度定位及算力管理系统',
+    favicon: './src/assets/images/logo-1.svg', // 或者 public/favicon.ico
   },
   server: {
     proxy: {
       '/api': 'http://localhost:3000'
     }
+  },
+  output: {
+    distPath: {
+      root: 'vehicle-web/zn-web',
+    },
   }
 });
