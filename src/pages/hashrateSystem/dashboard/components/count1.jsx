@@ -130,46 +130,6 @@ const Count1 = () => {
 	  <Grid size={3}>
 		<Item elevation={0} backColor="#00B0FF">
 		  <IconBox backColor="#00B0FF">
-			<Box component="img" src={DroneCount4} sx={{width: 20, height: 20}}/>
-		  </IconBox>
-		  <Box>
-			<Typography variant="body1" fontWeight="500" noWrap mb={1}>
-			  消防设备总数
-			</Typography>
-			<Stack direction="row" alignItems="baseline">
-			  <Typography component="h6" variant="h4" fontWeight="700">
-				30
-			  </Typography>
-			  <Typography fontWeight={500} variant="body2">
-				台
-			  </Typography>
-			</Stack>
-		  </Box>
-		</Item>
-	  </Grid>
-	  <Grid size={3}>
-		<Item elevation={0} backColor="#FF80AB">
-		  <IconBox backColor="#FF80AB">
-			<Box component="img" src={DroneCount5} sx={{width: 20, height: 20}}/>
-		  </IconBox>
-		  <Box>
-			<Typography variant="body1" fontWeight="500" noWrap mb={1}>
-			  UPS电源数量
-			</Typography>
-			<Stack direction="row" alignItems="baseline">
-			  <Typography component="h6" variant="h4" fontWeight="700">
-				30
-			  </Typography>
-			  <Typography fontWeight={500} variant="body2">
-				台数
-			  </Typography>
-			</Stack>
-		  </Box>
-		</Item>
-	  </Grid>
-	  <Grid size={3}>
-		<Item elevation={0} backColor="#00B0FF">
-		  <IconBox backColor="#00B0FF">
 			<Box component="img" src={DroneCount6} sx={{width: 20, height: 20}}/>
 		  </IconBox>
 		  <Box>
@@ -202,6 +162,46 @@ const Count1 = () => {
 			  </Typography>
 			  <Typography fontWeight={500} variant="body2">
 				人
+			  </Typography>
+			</Stack>
+		  </Box>
+		</Item>
+	  </Grid>
+	  <Grid size={3}>
+		<Item elevation={0} backColor="#00B0FF">
+		  <IconBox backColor="#00B0FF">
+			<Box component="img" src={DroneCount4} sx={{width: 20, height: 20}}/>
+		  </IconBox>
+		  <Box>
+			<Typography variant="body1" fontWeight="500" noWrap mb={1}>
+			  消防设备总数
+			</Typography>
+			<Stack direction="row" alignItems="baseline">
+			  <Typography component="h6" variant="h4" fontWeight="700">
+				30
+			  </Typography>
+			  <Typography fontWeight={500} variant="body2">
+				台
+			  </Typography>
+			</Stack>
+		  </Box>
+		</Item>
+	  </Grid>
+	  <Grid size={3}>
+		<Item elevation={0} backColor="#FF80AB">
+		  <IconBox backColor="#FF80AB">
+			<Box component="img" src={DroneCount5} sx={{width: 20, height: 20}}/>
+		  </IconBox>
+		  <Box>
+			<Typography variant="body1" fontWeight="500" noWrap mb={1}>
+			  UPS数量
+			</Typography>
+			<Stack direction="row" alignItems="baseline">
+			  <Typography component="h6" variant="h4" fontWeight="700">
+				30
+			  </Typography>
+			  <Typography fontWeight={500} variant="body2">
+				台数
 			  </Typography>
 			</Stack>
 		  </Box>
