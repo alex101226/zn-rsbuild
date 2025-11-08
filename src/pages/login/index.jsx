@@ -131,11 +131,11 @@ const Login = () => {
           alignItems: 'center',
           mr: 30
         }}>
-          {/*<Box*/}
-          {/*    component="img"*/}
-          {/*    src={globalThis.CONSTANTS.SYSTEM_LOGO}*/}
-          {/*    sx={{ width: '50px', height: '50px' , display: 'flex', justifyContent: 'center' }}*/}
-          {/*/>*/}
+          <Box
+              component="img"
+              src={globalThis.CONSTANTS.SYSTEM_LOGO}
+              sx={{ width: '50px', height: '50px' , display: 'flex', justifyContent: 'center' }}
+          />
           <Text component="h5" variant="h5">
             {globalThis.CONSTANTS.SYSTEM_NAME}
           </Text>

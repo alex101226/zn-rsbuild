@@ -143,3 +143,18 @@ export const getFences = async ({page, pageSize}) => {
 export const addFence = async (data) => {
   return await http.post('/addFence', data)
 }
+
+//	dashboard统计
+export const systemCount = async () => {
+  return await http.get('/systemCount')
+}
+
+//	统计2	deviceCount
+export const deviceCount = async () => {
+  return await http.get('/deviceCount')
+}
+
+//	统计3	deviceCount
+export const vehicleTaskCount = async () => {
+  return await http.get('/vehicleTaskCount')
+}
