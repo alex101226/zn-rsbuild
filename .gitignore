@@ -7,7 +7,7 @@
 node_modules
 dist/
 build/
-vehicle-web/zn-web
+vehicle-front/build
 
 
 # Profile

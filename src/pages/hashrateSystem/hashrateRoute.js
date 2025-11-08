@@ -2,14 +2,30 @@ import HashrateCpu from './hashrateCpu'
 import HashrateUserManage from './hashrateUserManage'
 import HashrateTaskStatus from './hashrateTaskStatus'
 import HashrateTaskResource from './hashrateTaskResource'
+import Dashboard from './dashboard/index.js'
+
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 export const hashrateRoute = [
   {
-    path: '/',
+	path: '/',
+	Component: Dashboard,
+	handle: {
+	  hideMenuIcon: false,
+	  hideSide: false,
+	  system: 'hashrate',
+	  title: '首页',
+	  icon: <HomeOutlinedIcon />,
+	  alias: 'dashboard',
+	  role: ['admin', 'root']
+	}
+  },
+  {
+    path: '/hashrate-cpu',
     Component: HashrateCpu,
     handle: {
       hideMenuIcon: false,

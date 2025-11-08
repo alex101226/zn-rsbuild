@@ -27,7 +27,7 @@ export default defineConfig({
     },
   },
   html: {
-    title: '越泰高精度定位及算力管理系统',
+    title: '高精度车辆人员定位及算力管理系统',
     favicon: './src/assets/images/logo-1.svg', // 或者 public/favicon.ico
   },
   server: {
@@ -37,7 +37,7 @@ export default defineConfig({
   },
   output: {
     distPath: {
-      root: 'vehicle-web/zn-web',
+      root: 'vehicle-front/build',
     },
   }
 });

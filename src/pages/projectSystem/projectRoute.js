@@ -6,18 +6,18 @@ import FireHydrantAltOutlinedIcon from '@mui/icons-material/FireHydrantAltOutlin
 import Battery4BarOutlinedIcon from '@mui/icons-material/Battery4BarOutlined';
 
 export const projectRoute = [
-  {
-    path: '/project-monitor',
-    Component: ProjectMonitor,
-    handle: {
-      hideMenuIcon: false,
-      hideSide: false,
-      system: 'project',
-      title: '摄像头监控',
-      icon: <VideocamOutlinedIcon />,
-      role: ['admin', 'root']
-    }
-  },
+  // {
+  //   path: '/project-monitor',
+  //   Component: ProjectMonitor,
+  //   handle: {
+  //     hideMenuIcon: false,
+  //     hideSide: false,
+  //     system: 'project',
+  //     title: '摄像头监控',
+  //     icon: <VideocamOutlinedIcon />,
+  //     role: ['admin', 'root']
+  //   }
+  // },
   {
     path: '/project-fire-device',
     Component: ProjectFireDevice,

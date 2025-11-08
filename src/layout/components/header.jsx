@@ -118,8 +118,8 @@ const Header = () => {
       <AppBar position="fixed" elevation={0} component="header">
         <Toolbar>
           <SystemLogo />
-          {/*<Box sx={{ ml: 14 }} />*/}
-          <Box sx={{ width: 210 }} />
+          <Box sx={{ ml: 14 }} />
+          {/*<Box sx={{ width: 210 }} />*/}
           <HeadNav />
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
             {

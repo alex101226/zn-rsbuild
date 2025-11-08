@@ -25,7 +25,7 @@ EXPOSE 80
 RUN rm -rf /usr/share/nginx/html/*
 
 # 将 React 构建的静态文件复制到 Nginx 容器中
-COPY zn-web/ /usr/share/nginx/html
+COPY build/ /usr/share/nginx/html
 
 # 复制自定义的 nginx 配置（可选）
 COPY nginx.conf /etc/nginx/conf.d/default.conf

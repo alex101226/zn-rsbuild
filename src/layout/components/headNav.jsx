@@ -17,7 +17,7 @@ const pages = [
   {
     id: 2,
     name: '安全生产管理系统',
-    link: '/project-monitor',
+    link: '/project-fire-device',
     icon: <ReportProblemRoundedIcon />,
     alias: 'project',
   },
