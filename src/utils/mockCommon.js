@@ -10,7 +10,7 @@ dayjs.extend(utc)
 import { transNumber } from '@/utils'
 
 
-export const dateRange = ['2025-05-01', '2025-06-30']
+export const dateRange = ['2025-10-15', '2025-12-31']
 
 /**
  * 生成一个随机的 dayjs 时间，限定在某个区间
