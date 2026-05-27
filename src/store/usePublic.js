@@ -28,7 +28,8 @@ export const useSidebar = create((set) => ({
 //  客服 drawer
 export const useServiceDrawer = create((set) => ({
   openServiceDrawer: false,
-  setServiceDrawer: (flag) => {
-    set({ openServiceDrawer: flag })
+  serviceUrl: '',
+  setServiceDrawer: (flag, serviceUrl = '') => {
+    set({ openServiceDrawer: flag, serviceUrl })
   },
 }));

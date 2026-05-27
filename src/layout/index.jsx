@@ -11,6 +11,7 @@ import { carRoute } from '@/pages/carSystem/carRoute'
 import { projectRoute } from '@/pages/projectSystem/projectRoute'
 import { peopleRoute } from '@/pages/peopleSystem/peopleRoute'
 import serviceImage from "@/assets/images/service.png";
+import service2Image from "@/assets/images/service-2.png";
 
 
 const menuData = {
@@ -47,13 +48,22 @@ const Layout = () => {
   const { setServiceDrawer, } = useServiceDrawer()
   const renderFixedButton = () => {
     return (
+      <>
+        <Box
+            component="img"
+            sx={{ width: '72px', height: '72px', position: 'fixed', top: '80px', right: '8px', cursor: 'pointer', }}
+            src={service2Image}
+            alt=""
+            onClick={() => setServiceDrawer(true, globalThis.CONSTANTS.SERVICE_2_URL)}
+        />
         <Box
             component="img"
             sx={{ width: '56px', height: '56px', position: 'fixed', bottom: '200px', right: '16px', cursor: 'pointer', }}
             src={serviceImage}
             alt=""
-            onClick={() => setServiceDrawer(true)}
+            onClick={() => setServiceDrawer(true, globalThis.CONSTANTS.SERVICE_URL)}
         />
+      </>
     )
   }
 

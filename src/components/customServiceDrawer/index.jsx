@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import {AppBar, Box, Drawer, IconButton, Toolbar, Typography, CircularProgress} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import CustomDrawer from '@/components/customDrawer';
 import { useServiceDrawer } from '@/store'
 
 const CustomServiceDrawer = () => {
-  const { openServiceDrawer, setServiceDrawer } = useServiceDrawer()
+  const { openServiceDrawer, serviceUrl, setServiceDrawer } = useServiceDrawer()
 
   const handleClose = () => {
     setServiceDrawer(false)
@@ -26,7 +25,7 @@ const CustomServiceDrawer = () => {
   const renderContent = () => {
     return <Box
         component="iframe"
-        src={globalThis.CONSTANTS.SERVICE_URL}
+        src={serviceUrl || globalThis.CONSTANTS.SERVICE_URL}
         width="100%"
         height="800px"
         frameBorder="0"
@@ -38,7 +37,7 @@ const CustomServiceDrawer = () => {
           elevation={0}
           open={openServiceDrawer}
           variant="temporary"
-          onClose={openServiceDrawer}
+          onClose={handleClose}
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 2,
             '& .MuiDrawer-paper': {

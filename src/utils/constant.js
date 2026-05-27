@@ -18,4 +18,5 @@ globalThis.CONSTANTS = {
   SYSTEM_LOGO: '',
   //  https://1072558463339856.appflow.aliyunnest.com/webhook/home/b271bff129da247a59cfcb099ddc6ee574a135b05884a311439ec738477491ef919008c041108265f3/index
   SERVICE_URL: 'http://yzluck.cn/webhook/home/b271bff129da247a59cfcb099ddc6ee574a135b05884a311439ec738477491ef919008c041108265f3/index',
+  SERVICE_2_URL: 'http://agent-web.suoyoubao.top/#/?id=4ead75f2db8f434ea316e19f9c4e73d8',
 };
