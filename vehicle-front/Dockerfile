@@ -1,20 +1,3 @@
-# 阶段 1：构建 React 项目
-# FROM node:19 AS build
-
-# 设置工作目录
-# WORKDIR /app
-
-# 先复制 package 文件，利用缓存加速构建
-# OPY package*.json ./
-# RUN npm install
-
-# 再复制剩下的项目文件
-# COPY . .
-
-# 构建生产环境
-# RUN npm run build:file
-
-
 # 阶段 2：使用 Nginx 作为 Web 服务器
 FROM nginx:1.25-alpine
 

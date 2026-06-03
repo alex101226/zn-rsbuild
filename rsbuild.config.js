@@ -38,7 +38,7 @@ export default defineConfig({
   },
   output: {
 	distPath: {
-	  root: 'zn'
+	  root: './vehicle-front/build'
 	}
   }
 });
