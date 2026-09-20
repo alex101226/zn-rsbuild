@@ -49,13 +49,13 @@ const Layout = () => {
   const renderFixedButton = () => {
     return (
       <>
-        <Box
-            component="img"
-            sx={{ width: '72px', height: '72px', position: 'fixed', top: '80px', right: '8px', cursor: 'pointer', }}
-            src={service2Image}
-            alt=""
-            onClick={() => setServiceDrawer(true, globalThis.CONSTANTS.SERVICE_2_URL)}
-        />
+        {/*<Box*/}
+        {/*    component="img"*/}
+        {/*    sx={{ width: '72px', height: '72px', position: 'fixed', top: '80px', right: '8px', cursor: 'pointer', }}*/}
+        {/*    src={service2Image}*/}
+        {/*    alt=""*/}
+        {/*    onClick={() => setServiceDrawer(true, globalThis.CONSTANTS.SERVICE_2_URL)}*/}
+        {/*/>*/}
         <Box
             component="img"
             sx={{ width: '56px', height: '56px', position: 'fixed', bottom: '200px', right: '16px', cursor: 'pointer', }}
